@@ -1,0 +1,109 @@
+\hypertarget{_o_w_l_8h_source}{}\doxysection{C\+:/dev/\+OWL/\+OWL/\+OWL.h}
+\mbox{\hyperlink{_o_w_l_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <exception>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_o_w_l}{OWL}}\ }
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ *\ Inherited\ exception\ class\ to\ handle\ situations\ when\ the\ array\ lengths/sizes\ do\ not\ match\ up.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_o_w_l_1_1_size_mismatch_exception}{SizeMismatchException}}\ :\ \textcolor{keyword}{public}\ std::exception\ }
+\DoxyCodeLine{00016\ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_o_w_l_1_1_size_mismatch_exception_a8fe36aed0406628b650c1a3c36a60c28}{what}}();}
+\DoxyCodeLine{00019\ \ \ \ \ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ *\ Inherited\ exception\ class\ to\ handle\ situations\ when\ operations\ are\ required\ but\ the\ array\ is\ empty.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_o_w_l_1_1_empty_array_exception}{EmptyArrayException}}\ :\ \textcolor{keyword}{public}\ std::exception}
+\DoxyCodeLine{00025\ \ \ \ \ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_o_w_l_1_1_empty_array_exception_af1975644dbbe5738e1ff68c927c8bae4}{what}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ *\ Class\ to\ handle\ arrays\ containing\ double\ of\ any\ length\ (or\ size).}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}}
+\DoxyCodeLine{00034\ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a248a116356d1ea998d4e4d40cc4b6f02}{ArrayXD}}();}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a248a116356d1ea998d4e4d40cc4b6f02}{ArrayXD}}(std::vector<double>\ \&vec);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a1cdb85d1b7f36c459681f0b665b36654}{\string~ArrayXD}}()\ \{\};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a17b47c8cc9d8c98cbc1693cafa667346}{getArrayLength}}()\ \{\ \textcolor{keywordflow}{return}\ arrayLength;\ \};}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<double>\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_ab53c1fc62734fd70b8df99b21b17bd9e}{getArray}}()\ \{\ \textcolor{keywordflow}{return}\ array;\ \};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Setters}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a372b5f4016bd46238ae98f729e5ca62d}{setArray}}(std::vector<double>\&\ newArray);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Auxialaries}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a9a0add81cd2e289b9272b34e89fc1352}{size}}()\ \{\ \textcolor{keywordflow}{return}\ array.size();\ \};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a689a564e4ed16fe158f0de9984e8b2aa}{display}}();}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_afc810b3246a79159ae03d936615ffd86}{compareArrayLength}}(\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\&);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a14c4da58bb7159ae2f65aab6790736cd}{checkEmptyArray}}();}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a1aa16840199ce14dbbeb04ce9f86d4b3}{findClosestElement}}(\textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a09534cd40a667b8127287ed6ef386cdb}{findClosestElementIndex}}(\textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_aecba7ae0922326267de820ce964051e8}{findCLosestElementLessThan}}(\textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a08a16a111c7a2945efee398814781570}{findCLosestElementLessThanIndex}}(\textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_ad48a1398de0829b2b53c93c66bbfb9e0}{findCLosestElementGreaterThan}}(\textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_ad71dc110cc443941e6362dfd255d0c0c}{findCLosestElementGreaterThanIndex}}(\textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ operator\ overloads}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\&\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_ac4b250931b3e73fddfae1dc7c6e5e700}{operator[]}}(\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a194e6d232afc777cb00db45d0257161d}{operator+}}(\textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a194e6d232afc777cb00db45d0257161d}{operator+}}(\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\&);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a264f4a4c222245ab2c256768a274478d}{operator-\/}}(\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\&);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a249a4229900f923906ef3f07daf02d08}{operator*}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double});}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d_a249a4229900f923906ef3f07daf02d08}{operator*}}(\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\&);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ arrayLength;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ std::vector<double>\ array;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ arithmetic\ operations}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ add(\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\&);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ subtract(\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\&);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ multiply(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\ multiply(\mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{ArrayXD}}\&);}
+\DoxyCodeLine{00070\ \ \ \ \ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ \ \ \ *\ The\ functions\ below\ pertains\ to\ creating\ a\ custom\ OWL::ArrayXD}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00075\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_ab52b8586fa2f1ee450cb71aa83da609b}{Zeros}}(\textcolor{keywordtype}{int}\ len\ =\ 50);}
+\DoxyCodeLine{00076\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_aff45f7e53df0006a542b6ebd3822e45a}{Ones}}(\textcolor{keywordtype}{int}\ len\ =\ 50);}
+\DoxyCodeLine{00077\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a9cc357b8faef2bfb7b097a4da5b440a9}{aRange}}(\textcolor{keywordtype}{int}\ start,\ \textcolor{keywordtype}{int}\ end);}
+\DoxyCodeLine{00078\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_acd23472bb73d05c40b17071e927dc6a6}{LinSpaced}}(\textcolor{keywordtype}{double}\ startDouble,\ \textcolor{keywordtype}{double}\ endDouble,\ \textcolor{keywordtype}{int}\ length\ =\ 50);}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ \ \ \ *\ The\ functions\ below\ pertains\ to\ performing\ element-\/by-\/element\ math\ operatons\ on\ OWL::ArrayXD}}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a5d1b2e3ec2eb9e52f6a4f0de5ee449a1}{abs}}(ArrayXD\&);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ trig\ functions}}
+\DoxyCodeLine{00087\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a66e6e3b95a841a6f719e28d849f725ad}{sin}}(ArrayXD\&);}
+\DoxyCodeLine{00088\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a24c8c0dac295fa4a1d49a5c96a411141}{cos}}(ArrayXD\&);}
+\DoxyCodeLine{00089\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a9ca1e34d218a8c18657e44a9557e59d4}{tan}}(ArrayXD\&);}
+\DoxyCodeLine{00090\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a922219bff72cb1949db55fec4133a984}{asin}}(ArrayXD\&);}
+\DoxyCodeLine{00091\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a2de3a9fe8b33fdd210f07135ed97d95e}{acos}}(ArrayXD\&);}
+\DoxyCodeLine{00092\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a15a8ca8aff4dbba0aa4f1bf74ba41854}{atan}}(ArrayXD\&);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ exponential\ and\ log\ functions}}
+\DoxyCodeLine{00095\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_aa1ed853f219787cbe3bf9f49516402d3}{exp}}(ArrayXD\&);}
+\DoxyCodeLine{00096\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_acc4195ec6031c017f113b9864be86754}{log10}}(ArrayXD\&);}
+\DoxyCodeLine{00097\ \ \ \ \ ArrayXD\ \mbox{\hyperlink{namespace_o_w_l_a8ff29d3dca49546ab6c015cb9177b819}{ln}}(ArrayXD\&);}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00101\ \textcolor{comment}{*\ Functions\ below\ pertains\ to\ operator\ overloads\ free\ functions}}
+\DoxyCodeLine{00102\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00103\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{OWL::ArrayXD}}\ \mbox{\hyperlink{_o_w_l_8h_aa9da1f0e19d1c1d77446d220f24bb358}{operator+}}(\textcolor{keywordtype}{double},\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{OWL::ArrayXD}});}
+\DoxyCodeLine{00104\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{OWL::ArrayXD}}\ \mbox{\hyperlink{_o_w_l_8h_a3a9804711cf84f20c2a318ed947a04e0}{operator*}}(\textcolor{keywordtype}{double}\ lhsScalar,\ \mbox{\hyperlink{class_o_w_l_1_1_array_x_d}{OWL::ArrayXD}}\ rhsArray);}
+
+\end{DoxyCode}
