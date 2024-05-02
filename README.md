@@ -9,6 +9,20 @@ The member and free functions in this library have been tested using varous test
 
 Please refer to documentations in the docs folder for contained classes, methods, and functions.
 
+### Installation
+
+1. Clone the repository
+	```
+	git clone --recurse-submodules git@github.com:m0in92/OWL.git
+	```
+2. Build the project using cmake
+	```
+	mkdir build
+	cd build
+	cmake ..
+	cmake --build .
+	```
+
 ### Usage
 #### Initialization
 

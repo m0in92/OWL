@@ -1,0 +1,10 @@
+^C:\USERS\MOIN\VSCODEPROJECT\OWL\BUILD\CMAKEFILES\36FFE7FC64956A27F51BB352BE344B7F\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Moin/VSCodeProject/OWL -BC:/Users/Moin/VSCodeProject/OWL/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Moin/VSCodeProject/OWL/build/OWL_PROJECT.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
