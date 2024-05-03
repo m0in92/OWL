@@ -1,9 +1,16 @@
-//
-// Created by moina on 7/4/2023.
-//
+/**
+ * @file OWL.h
+ * @author Moin AhmedMoin Ahmed (moinahmed100@gmail.com)
+ * @brief provides the functionality to perform array and matrix operations in C++ through modification of std::vector objects.
+ * @version 0.1
+ * @date 2024-05-03
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
-#ifndef OWL_OWL_H
-#define OWL_OWL_H
+#ifndef SPCPP_OWL_H
+#define SPCPP_OWL_H
 
 #include <iostream>
 #include <vector>
@@ -13,6 +20,10 @@
 #include <limits>
 #include <functional>
 
+/**
+ * @brief 
+ * 
+ */
 namespace OWL
 {
     /*
@@ -48,6 +59,7 @@ namespace OWL
         // Setters
         void setArray(std::vector<double>& newArray);
         // Auxialaries
+        void append(double new_element) {array.push_back(new_element);}
         size_t size() { return array.size(); };
         void display();
         double isEqual(ArrayXD&);
@@ -86,7 +98,7 @@ namespace OWL
     */
     ArrayXD Zeros(int len = 50);
     ArrayXD Ones(int len = 50);
-    ArrayXD aRange(int start, int end);
+    ArrayXD aRange(double start, double end, double dx);
     ArrayXD LinSpaced(double startDouble, double endDouble, int length = 50);
 
     /*
@@ -107,6 +119,12 @@ namespace OWL
     ArrayXD exp(ArrayXD&);
     ArrayXD log10(ArrayXD&);
     ArrayXD ln(ArrayXD&);
+
+    /*
+    Functions below pertains to operations on two OWL::ArrayXD
+    */
+   ArrayXD append(ArrayXD&, ArrayXD&);
+
 
     /*
     * Classes to handle exceptions for OWL::MatrixXD
@@ -259,8 +277,9 @@ namespace Newton
     }
 
     namespace roots {
-        double Brent(double (*func)(double), double lower_bound, double upper_bound, double TOL, double MAX_ITER);
+        // double Brent(double (*func)(double), double lower_bound, double upper_bound, double TOL, double MAX_ITER);
+        double Brent(std::function<double(double)> func, double lower_bound, double upper_bound, double TOL, double MAX_ITER);
     }
 }
 
-#endif //OWL_OWL_H
+#endif //SPCPP_OWL_H
