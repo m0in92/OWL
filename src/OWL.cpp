@@ -1580,6 +1580,39 @@ namespace OWL
         return resArray;
     }
 
+    void MatrixXD::display()
+    {
+        for (int idx = 0; idx < m; idx++)
+        {
+            elements[idx].display();
+        }
+    }
+
+    double* MatrixXD::convert_to_double()
+    {
+        int idx = 0;
+        double *res_array = new double();
+        for (int row_index = 0; row_index < m; row_index++)
+        {
+            for (int col_index = 0; col_index < n; col_index++)
+            {
+                res_array[idx] = elements[row_index].getArray()[col_index];
+                idx++;
+            }
+        }
+        return res_array;
+    }
+
+    std::vector<std::vector<double>> MatrixXD::convert_to_vector_double()
+    {
+        std::vector<std::vector<double>> res_matrix;
+        for (int row_index = 0; row_index < m; row_index++)
+        {
+            res_matrix[row_index] = elements[row_index].getArray();
+        }
+        return res_matrix;
+    }
+
     /**
      * Operator overload for addition to have matrix addition
      *
@@ -1650,7 +1683,6 @@ namespace OWL
                 ArrayXD colArray = inputMatrix.getCol(colIndex);
                 // multiply the row of the current and col of the other and sum them
                 ArrayXD multArray = elements[rowIndex] * colArray;
-                multArray.display();
                 // update the entries of the result matrix
                 resMatrix[rowIndex][colIndex] = multArray.sum();
             }

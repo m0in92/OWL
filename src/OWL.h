@@ -173,13 +173,9 @@ namespace OWL
         int getColSize() { return n; };
         std::vector<ArrayXD> getElements() { return elements; };
         // helper functions
-        void display()
-        {
-            for (int idx=0; idx < m; idx++)
-            {
-                elements[idx].display();
-            }
-        }
+        void display();
+        double* convert_to_double();
+        std::vector<std::vector<double>> convert_to_vector_double();
         // operator overloads
         OWL::ArrayXD &operator[](int rowIndex)
         {
