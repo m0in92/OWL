@@ -20,7 +20,7 @@ TEST(TestCustomArray, TestOnes) {
 }
 
 TEST(TestCustomArray, TestArange) {
-	OWL::ArrayXD sampleArray = OWL::aRange(0, 10);
+	OWL::ArrayXD sampleArray = OWL::aRange(0, 10, 1);
 	// Check the array size
 	EXPECT_EQ(10, sampleArray.getArrayLength());
 	// Check the array elements

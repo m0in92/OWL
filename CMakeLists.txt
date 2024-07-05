@@ -3,11 +3,10 @@ project(OWL_PROJECT)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(TEST_OWL_SOURCES example.cpp)
+# set(TEST_OWL_SOURCES example.cpp)
 
 add_subdirectory(src)
 add_subdirectory(gtests)
+add_subdirectory(examples)
 
-add_executable(example ${TEST_OWL_SOURCES})
 
-target_link_libraries(example owl)

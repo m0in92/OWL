@@ -179,3 +179,4 @@ $RECYCLE.BIN/
 
 # Other Files
 .idea
+build/
