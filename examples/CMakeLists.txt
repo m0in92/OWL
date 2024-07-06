@@ -9,3 +9,9 @@ target_link_libraries(differentiation owl)
 
 add_executable(linear_equation linear_equation.cpp)
 target_link_libraries(linear_equation linalg)
+
+add_executable(linear_equation_2 linear_equations_2.cpp)
+target_link_libraries(linear_equation_2 linalg)
+
+add_executable(first_order_finite_differences first_order_finite_differences.cpp)
+target_link_libraries(first_order_finite_differences numerical_methods)
