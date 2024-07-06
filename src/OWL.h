@@ -167,6 +167,7 @@ namespace OWL
         // Constructors
         MatrixXD();
         MatrixXD(std::vector<ArrayXD> inputElements);
+        MatrixXD(std::vector<std::vector<double>>);
         MatrixXD(const int, const int);
         // Getter functions
         int getRowSize() { return m; };
@@ -193,7 +194,8 @@ namespace OWL
         }
         MatrixXD operator+(MatrixXD &);
         MatrixXD operator-(MatrixXD &);
-        MatrixXD operator*(MatrixXD &);
+        MatrixXD operator*(MatrixXD);
+        MatrixXD operator*(ArrayXD);
         // Auxiliary Functions
         bool compareSize(MatrixXD &);
         OWL::ArrayXD getCol(int);
@@ -285,6 +287,7 @@ namespace OWL
      *     None
      */
     MatrixXD Diag(int);
+    MatrixXD diff_second_order(int);  // second order differential matrix with fixed boundary values.
 }
 
 /*
@@ -292,6 +295,7 @@ namespace OWL
  */
 OWL::ArrayXD operator+(double, OWL::ArrayXD);
 OWL::ArrayXD operator*(double lhsScalar, OWL::ArrayXD rhsArray);
+OWL::MatrixXD operator*(double lhs_scalar, OWL::MatrixXD rhs_matrix);
 
 namespace Newton
 {

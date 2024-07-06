@@ -3,4 +3,6 @@ target_link_libraries(array_addition owl)
 
 add_executable(matrix_multiplication matrix_multiplication.cpp)
 target_link_libraries(matrix_multiplication owl)
-target_link_libraries(matrix_multiplication ${BLAS_LIBRARIES})
+
+add_executable(differentiation differentiation.cpp)
+target_link_libraries(differentiation owl)

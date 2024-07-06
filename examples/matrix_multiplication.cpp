@@ -1,7 +1,16 @@
+/**
+ * @file matrix_multiplication.cpp
+ * @author your name (you@domain.com)
+ * @brief This file gives examples of matrix multiplication.
+ * @version 0.1
+ * @date 2024-07-05
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #include <iostream>
 #include <vector>
-
-#include "cblas.h"
 
 #include "owl.h"
 
@@ -9,35 +18,53 @@ const int n = 3;
 
 int main()
 {
-    std::vector<double> vec1 = {2, 0, 0};
-    std::vector<double> vec2 = {0, 2, 0};
-    std::vector<double> vec3 = {0, 0, 2};
+    OWL::ArrayXD row1;
+	OWL::ArrayXD row2;
+    OWL::ArrayXD row3;
+	row1 << 0;
+	row1 << 1;
+	row1 << 2;
+	row2 << 3;
+	row2 << 4;
+	row2 << 5;
+    row3 << 6;
+	row3 << 7;
+	row3 << 8;
 
-    OWL::ArrayXD array1 = OWL::ArrayXD(vec1);
-    OWL::ArrayXD array2 = OWL::ArrayXD(vec2);
-    OWL::ArrayXD array3 = OWL::ArrayXD(vec3);
+    OWL::MatrixXD sampleMatrix1 = OWL::MatrixXD();
+	sampleMatrix1 << row1;
+	sampleMatrix1 << row2;
+    sampleMatrix1 << row3;
+    OWL::ArrayXD row11;
+	OWL::ArrayXD row22;
+    OWL::ArrayXD row33;
+	row11 << 0;
+	row22 << 1;
+    row33 << 1;
+	OWL::MatrixXD sampleMatrix2 = OWL::MatrixXD();
+	sampleMatrix2 << row11;
+	sampleMatrix2 << row22;
+    sampleMatrix2 << row33;
+    OWL::MatrixXD sampleMatrix3 = sampleMatrix1 * sampleMatrix2;
+    sampleMatrix3.display();
 
-    std::vector<OWL::ArrayXD> vec4 = {array1, array2, array3};
+    // Create the first matrix
+    std::vector<double> vec1 = {1, 2, 3};
+    std::vector<double> vec2 = {4, 5, 6};
+    std::vector<double> vec3 = {7, 8, 9};
+
+    std::vector<std::vector<double>> vec4 = {vec1, vec2, vec3};
     OWL::MatrixXD mat1 = OWL::MatrixXD(vec4);
 
-    double* A = mat1.convert_to_double();
+    // Create the second matrix
+    std::vector<double> vec5 = {6};
+    std::vector<double> vec6 = {3};
+    std::vector<double> vec7 = {4};
 
-    // print A
-    std::cout << A[0] << " " << A[1] << " " << A[2] << std::endl;
-    std::cout << A[3] << " " << A[4] << " " << A[5] << std::endl;
-    std::cout << A[6] << " " << A[7] << " " << A[8] << std::endl;
-
-
-    // double  C[n];
-    double C[n * n];
-    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, n, n, n, 1.0, A, n, A, n, 0.0, C, n);
-
-    // print C
-    std::cout << C[0] << " " << C[1] << " " << C[2] << std::endl;
-    std::cout << C[3] << " " << C[4] << " " << C[5] << std::endl;
-    std::cout << C[6] << " " << C[7] << " " << C[8] << std::endl;
-
-    delete[] A;
+    std::vector<std::vector<double>> vec8 = {vec5, vec6, vec7};
+    OWL::MatrixXD mat2 = OWL::MatrixXD(vec8);
+    OWL::MatrixXD A = mat1 * mat2;
+    A.display();
 
     return 0;
 }

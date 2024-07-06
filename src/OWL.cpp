@@ -10,6 +10,8 @@
  *
  */
 
+#include "cblas.h"
+
 #include "owl.h"
 
 namespace OWL
@@ -1433,6 +1435,20 @@ namespace OWL
         n = findColSize();
     }
 
+    MatrixXD::MatrixXD(std::vector<std::vector<double>> i_vec)
+    {
+        std::vector<ArrayXD> vec_of_arrays;
+        for (int idx = 0; idx < i_vec.size(); idx++)
+        {
+            OWL::ArrayXD array = OWL::ArrayXD(i_vec[idx]);
+            vec_of_arrays.push_back(array);
+        }
+        elements = vec_of_arrays;
+
+        m = findRowSize();
+        n = findColSize();
+    }
+
     /**
      * MatrixXD
      *
@@ -1588,19 +1604,20 @@ namespace OWL
         }
     }
 
-    double* MatrixXD::convert_to_double()
+    double *MatrixXD::convert_to_double()
     {
         int idx = 0;
-        double *res_array = new double();
+        double *result_array;
+        result_array = new double[m * n];
         for (int row_index = 0; row_index < m; row_index++)
         {
             for (int col_index = 0; col_index < n; col_index++)
             {
-                res_array[idx] = elements[row_index].getArray()[col_index];
+                result_array[idx] = elements[row_index].getArray()[col_index];
                 idx++;
             }
         }
-        return res_array;
+        return result_array;
     }
 
     std::vector<std::vector<double>> MatrixXD::convert_to_vector_double()
@@ -1667,27 +1684,115 @@ namespace OWL
         return resMatrix;
     }
 
-    MatrixXD MatrixXD::operator*(MatrixXD &inputMatrix)
+    MatrixXD MatrixXD::operator*(MatrixXD inputMatrix)
     {
-        // check if the col size of the current matrix matches the row size of the input matrix
-        if (n != inputMatrix.getRowSize())
+        // Below creates a double array A and fills out its elements
+        double A[m * n] = {0.0};
+        int idx = 0;
+        for (int i = 0; i < n; i++)
         {
-            throw std::invalid_argument("Sizes of the matrix not suitable for matrix multiplication.");
-        }
-        MatrixXD resMatrix = MatrixXD(m, inputMatrix.getColSize());
-        for (int rowIndex = 0; rowIndex < m; rowIndex++)
-        {
-            for (int colIndex = 0; colIndex < inputMatrix.getColSize(); colIndex++)
+            for (int j = 0; j < m; j++)
             {
-                // create an array for col of input array
-                ArrayXD colArray = inputMatrix.getCol(colIndex);
-                // multiply the row of the current and col of the other and sum them
-                ArrayXD multArray = elements[rowIndex] * colArray;
-                // update the entries of the result matrix
-                resMatrix[rowIndex][colIndex] = multArray.sum();
+                A[idx] = elements[j].getArray()[i];
+                idx++;
             }
         }
-        return resMatrix;
+
+        // Below creats a double array B
+        int B_NROW = inputMatrix.getRowSize();
+        int B_NCOL = inputMatrix.getColSize();
+        double B[B_NROW * B_NCOL] = {0.0};
+        idx = 0;
+        for (int i = 0; i < B_NROW; i++)
+        {
+            for (int j = 0; j < B_NCOL; j++)
+            {
+                // std::cout << elements[i].getArray()[j] << std::endl;
+                B[idx] = inputMatrix.getElements()[i].getArray()[j];
+                idx++;
+            }
+        }
+
+        double C[m * B_NCOL];
+        // int A_NROWS = mat1.getRowSize();
+        // int B_NCOLS = mat1.getColSize();
+        // int A_NCOLS = mat1.getColSize();
+        int LDA = n;
+        int LDB = B_NROW;
+        int LDC = m;
+
+        cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, B_NCOL, n, 1.0, A, LDA, B, LDB, 0.0, C, LDC);
+
+        // Create a result matrix
+        idx = 0;
+        // std::vector<double> result_vector(C, C + sizeof C / sizeof C[0]);
+        std::vector<std::vector<double>> result_vector;
+        for (int i = 0; i < m; i++)
+        {
+            std::vector<double> vec_;
+            for (int j = 0; j < B_NCOL; j++)
+            {
+                vec_.push_back(C[idx]);
+                idx++;
+            }
+            result_vector.push_back(vec_);
+        }
+
+        return MatrixXD(result_vector);
+    }
+
+    MatrixXD MatrixXD::operator*(ArrayXD input_array)
+    {
+        // Below creates a double array A and fills out its elements
+        double A[m * n] = {0.0};
+        int idx = 0;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                A[idx] = elements[j].getArray()[i];
+                idx++;
+            }
+        }
+
+        // Below creats a double array B
+        int B_NROW = input_array.getArrayLength();
+        int B_NCOL = 1;
+        double B[B_NROW * B_NCOL] = {0.0};
+        idx = 0;
+        for (int i = 0; i < B_NROW; i++)
+        {
+            // std::cout << elements[i].getArray()[j] << std::endl;
+            B[idx] = input_array.getArray()[i];
+            idx++;
+        }
+
+        // Create C matrix
+        double C[m];
+        // int A_NROWS = mat1.getRowSize();
+        // int B_NCOLS = mat1.getColSize();
+        // int A_NCOLS = mat1.getColSize();
+        int LDA = n;
+        int LDB = B_NROW;
+        int LDC = m;
+
+        cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, B_NCOL, n, 1.0, A, LDA, B, LDB, 0.0, C, LDC);
+
+        // Create a result matrix
+        idx = 0;
+        // std::vector<double> result_vector(C, C + sizeof C / sizeof C[0]);
+        std::vector<std::vector<double>> result_vector;
+        for (int i = 0; i < m; i++)
+        {
+            std::vector<double> vec_;
+            for (int j = 0; j < B_NCOL; j++)
+            {
+                vec_.push_back(C[idx]);
+                idx++;
+            }
+            result_vector.push_back(vec_);
+        }
+        return MatrixXD(result_vector);
     }
 
     /**
@@ -1877,6 +1982,26 @@ namespace OWL
         }
         return resMatrix;
     }
+
+    MatrixXD diff_second_order(int i_n)
+    {
+        MatrixXD result_matrix = MatrixXD(i_n, i_n);
+
+        // add values to the result matrix
+        result_matrix[0][0] = -2;
+        result_matrix[0][1] = 1;
+        result_matrix[i_n - 1][i_n - 1] = -2;
+        result_matrix[i_n - 1][i_n - 2] = 1;
+
+        for (int idx = 1; idx < (i_n - 1); idx++)
+        {
+            result_matrix[idx][idx - 1] = 1;
+            result_matrix[idx][idx] = -2;
+            result_matrix[idx][idx + 1] = 1;
+        }
+
+        return result_matrix;
+    }
 }
 
 /*
@@ -1931,6 +2056,17 @@ OWL::ArrayXD operator*(double lhsScalar, OWL::ArrayXD rhsArray)
     // Create a new OWL::ArrayXD instance and return it
     OWL::ArrayXD resultVec = OWL::ArrayXD(interVec);
     return resultVec;
+}
+
+OWL::MatrixXD operator*(double lhs_scalar, OWL::MatrixXD rhs_matrix)
+{
+    OWL::MatrixXD result_matrix = OWL::MatrixXD(rhs_matrix.getRowSize(), rhs_matrix.getColSize());
+    for (int i =0; i< rhs_matrix.getRowSize(); i++) {
+        for (int j=0; j<rhs_matrix.getColSize(); j++) {
+            result_matrix[i][j] = lhs_scalar * rhs_matrix[i][j];
+        }
+    }
+    return result_matrix;
 }
 
 namespace Newton
