@@ -1686,6 +1686,16 @@ namespace OWL
 
     MatrixXD MatrixXD::operator*(MatrixXD inputMatrix)
     {
+        // MatrixXD result_matrix = MatrixXD(m, inputMatrix.getColSize());
+
+        // for (int i=0; i<m; i++){
+        //     for (int j=0; j<inputMatrix.getColSize(); j++) {
+        //         OWL::ArrayXD input_matrix_col = inputMatrix.getCol(j);
+        //         OWL::ArrayXD array = elements[i] * input_matrix_col;
+        //         result_matrix[i][j] = array.sum();
+        //     }
+        //     return result_matrix;
+        // }
         // Below creates a double array A and fills out its elements
         double A[m * n] = {0.0};
         int idx = 0;

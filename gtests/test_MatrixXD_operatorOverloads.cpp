@@ -120,3 +120,17 @@ TEST(TestMatrixXDOperatorOverload, TestMatrixMultiplication) {
 	EXPECT_EQ(2, sampleMatrix3.getRowSize());
 	EXPECT_EQ(1, sampleMatrix3.getColSize());
 }
+
+TEST(TestMatrixXDOperatorOverload, TestMatrixArrayMultiplication) {
+	int Nx = 10;
+    OWL::ArrayXD x = OWL::LinSpaced(0, 3.141592/2, Nx);
+    double h = x[1] - x[0];
+
+    OWL::ArrayXD y = OWL::sin(x);
+
+    OWL::MatrixXD diff_matrix = OWL::diff_second_order(Nx);
+    OWL::MatrixXD diff_results = (1/std::pow(h,2)) * diff_matrix * y;
+    
+	EXPECT_NEAR(5.7005346, diff_results[0][0], 0.00001);
+	EXPECT_NEAR(-0.17320779, diff_results[1][0], 0.00001);
+}
