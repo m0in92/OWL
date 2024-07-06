@@ -1,33 +1,57 @@
 #include <iostream>
+#include <vector>
 
-extern "C" void dgesv_( int *n, int *nrhs, double  *a, int *lda, int *ipiv, double *b, int *lbd, int *info  );
-extern "C" void dgttrs_();
+#include "linalg.h"
 
-int main() {
-    int SIZE = 3;
-    int nrhs = 1; // one column in b
-    int lda = SIZE;  // leading dimension of A
-    int ldb = SIZE;  // leading dimension of b
+
+OWL::ArrayXD solve_dgsev(OWL::MatrixXD i_matrix, OWL::ArrayXD i_array)
+{
+    int SIZE = i_matrix.getColSize();
+    int nrhs = 1;   // one column in b
+    int lda = SIZE; // leading dimension of A
+    int ldb = SIZE; // leading dimension of b
     int i_piv[SIZE] = {0};
     int info;
 
-    double A[SIZE * SIZE] = {1, 0, 2, 1, 2, 5, 1, 5, -1};
-    double b[SIZE] = {6, -4, 27};
+    // create A
+    double A[SIZE * SIZE];
+    int idx = 0;
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            A[idx] = i_matrix.getElements()[j].getArray()[i];
+            idx++;
+        }
+    }
 
-    dgesv_( &SIZE, &nrhs, &*A, &lda, &*i_piv, &*b, &ldb, &info );	
-    
-    if (info == 0) {
+    // create B
+    int B_NROW = i_array.getArrayLength();
+    int B_NCOL = 1;
+    double B[B_NROW] = {0.0};
+    idx = 0;
+    for (int i = 0; i < B_NROW; i++)
+    {
+        // std::cout << elements[i].getArray()[j] << std::endl;
+        B[idx] = i_array.getArray()[i];
+        idx++;
+    }
+
+    // solve
+    dgesv_(&SIZE, &nrhs, &*A, &lda, &*i_piv, &*B, &ldb, &info);
+
+    if (info == 0)
+    {
         std::cout << "Simulation run successfully." << std::endl;
-
-        // output results
-        std::cout <<  b[0] << std::endl;
-        std::cout << b[1]  << std::endl;
-        std::cout << b[2] << std::endl;
-    }
-    else {
-        std::cout << "Simulation didnot run properly." << std::endl;
     }
 
-    return 0;
+    idx = 0;
+    std::vector<double> result_vec;
+    for (int i=0; i<SIZE; i++)
+    {
+        result_vec.push_back(B[i]);
+    }
 
+    return OWL::ArrayXD(result_vec);
 }
+

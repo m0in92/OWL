@@ -6,3 +6,6 @@ target_link_libraries(matrix_multiplication owl)
 
 add_executable(differentiation differentiation.cpp)
 target_link_libraries(differentiation owl)
+
+add_executable(linear_equation linear_equation.cpp)
+target_link_libraries(linear_equation linalg)
