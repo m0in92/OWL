@@ -3,9 +3,15 @@
 **Author:** Moin Ahmed <br>
 **Originally created in 2022.**
 
-Owl Array Library provides functionality to handle arrays and matrices in C++, as well as perform basic arithmetic and mathematical operations on them. This library can used by linking the static library and including header files into your project directory.
+This repository provides the following functionality in the C++ programming language
+- creating and handling arrays and matrices
+- basic arithematic and algebraic operations on arrays and matrices
+- linear algebra operations such as matrix multiplications and the linear system of equations solution.
+- numerical methods for solving ordinary differential equations
 
-The member and free functions in this library have been tested using varous tests written using Google Tests. The conducted tests are included in the tests directory, however, it is important to note that these tests are conducted in another visual studio project by the author. Hence if anyone tries to run the test files, they will have to include OWL header file(s) and link the lib file(s) themselves.
+This source code is intended to be compiled as a static library that can be linked to any other code. Please find the CMakeLists.txt under examples folder for ideas to include the source code to your projects. 
+
+The member and free functions in this library have been tested using varous tests written using Google Tests. The conducted tests are included in the tests directory.
 
 Please refer to documentations in the docs folder for contained classes, methods, and functions.
 

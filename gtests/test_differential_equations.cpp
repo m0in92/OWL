@@ -1,8 +1,7 @@
-#include <cmath>
+#include "gtest/gtest.h"
 
-#include "owl.h"
+#include "OWL.h"
 #include "differential_equations.h"
-
 
 double A = 0.0;
 double B = 1.0;
@@ -16,11 +15,14 @@ double func(double x)
 double BC1 = 0.0;
 double BC2 = 0.0;
 
-int main()
+TEST(TestDifferentialEquations, TestPoissonEquation1D)
 {
     OWL::ArrayXD linesegment = OWL::LinSpaced(A, B, Nx);
     
     OWL::ArrayXD result = one_dimensional::poisson_equation(linesegment, func, BC1, BC2);
 
-    result.display();
+    EXPECT_EQ(0.0, result[0]);
+    EXPECT_EQ(-3.2835e-3, result[1]);
+    EXPECT_EQ(-3.2835e-3, result[1]);
+    EXPECT_EQ(-6.467020e-03, result[2]);
 }

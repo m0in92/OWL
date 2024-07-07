@@ -14,7 +14,7 @@ namespace one_dimensional
         // create the rhs col vector
         std::vector<double> rhs_;
         rhs_.push_back(bc1);
-        for (int i = 0; i < linesegment.getArrayLength() - 1; i++)
+        for (int i = 1; i < (SIZE - 1); i++)
         {
             rhs_.push_back(func(linesegment[i]));
         }
