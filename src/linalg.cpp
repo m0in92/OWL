@@ -3,7 +3,6 @@
 
 #include "linalg.h"
 
-
 OWL::ArrayXD solve_dgsev(OWL::MatrixXD i_matrix, OWL::ArrayXD i_array)
 {
     int SIZE = i_matrix.getColSize();
@@ -47,7 +46,7 @@ OWL::ArrayXD solve_dgsev(OWL::MatrixXD i_matrix, OWL::ArrayXD i_array)
 
     idx = 0;
     std::vector<double> result_vec;
-    for (int i=0; i<SIZE; i++)
+    for (int i = 0; i < SIZE; i++)
     {
         result_vec.push_back(B[i]);
     }
@@ -55,3 +54,37 @@ OWL::ArrayXD solve_dgsev(OWL::MatrixXD i_matrix, OWL::ArrayXD i_array)
     return OWL::ArrayXD(result_vec);
 }
 
+OWL::ArrayXD solve_dgtsv(OWL::ArrayXD dl, OWL::ArrayXD d, OWL::ArrayXD ud, OWL::ArrayXD b)
+{
+    int SIZE = b.getArray().size();
+    int NCOL = 1;
+
+    OWL::ArrayXD result_array = OWL::Zeros(SIZE);
+
+    double *ptr_diag = d.convert_to_double();   // diag
+    double *ptr_ldiag = dl.convert_to_double(); // lower diag
+    double *ptr_udiag = ud.convert_to_double(); // upper diag
+    double *ptr_b = b.convert_to_double();      // array b
+
+    int info;
+    dgtsv(&SIZE, &NCOL, &*ptr_ldiag, &*ptr_diag, &*ptr_udiag, &*ptr_b, &SIZE, &info);
+
+    int idx = 0;
+    std::vector<double> result_vec;
+    for (int i = 0; i < SIZE; i++)
+    {
+        result_vec.push_back(ptr_b[i]);
+    }
+
+    if (info == 0)
+    {
+        std::cout << "Simulation run successfully." << std::endl;
+    }
+
+    // delete ptr_diag;
+    // delete ptr_udiag;
+    // delete ptr_ldiag;
+    // delete ptr_b;
+
+    return OWL::ArrayXD(result_vec);
+}

@@ -77,6 +77,7 @@ namespace OWL
         size_t findCLosestElementLessThanIndex(double &);
         double findCLosestElementGreaterThan(double &);
         size_t findCLosestElementGreaterThanIndex(double &);
+        double *convert_to_double();
         // operator overloads
         double &operator[](size_t);
         ArrayXD operator+(double &);

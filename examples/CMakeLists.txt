@@ -4,6 +4,9 @@ target_link_libraries(array_addition owl)
 add_executable(matrix_multiplication matrix_multiplication.cpp)
 target_link_libraries(matrix_multiplication owl)
 
+add_executable(tri_mat_mult tridiagonal_matrix_multiplication.cpp)
+target_link_libraries(tri_mat_mult owl)
+
 add_executable(differentiation differentiation.cpp)
 target_link_libraries(differentiation owl)
 

@@ -587,6 +587,13 @@ namespace OWL
         return flag;
     }
 
+    double* ArrayXD::convert_to_double()
+    {
+        double *ptr = new double;
+        ptr = array.data();
+        return ptr;
+    }
+
     /**
      * add
      *

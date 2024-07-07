@@ -34,4 +34,12 @@ namespace one_dimensional
         OWL::ArrayXD result = solve_dgsev(lhs_matrix, rhs);
         return result;
     }
+
+    std::vector<double> poisson_equation(double A, double B, double Nx, double(*func)(double), double bc1, double bc2)
+    {
+        OWL::ArrayXD array = OWL::LinSpaced(A, B, Nx);
+        OWL::ArrayXD result = poisson_equation(array, func, bc1, bc2);
+
+        return result.getArray();
+    }
 }
