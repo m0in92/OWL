@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iostream>
 
+#include "owl.h"
 #include "numerical_methods.h"
 
 #define PI 3.142

@@ -13,6 +13,7 @@
 
 #include <vector>
 
+#include "owl.h"
 #include "linalg.h"
 
 int main()

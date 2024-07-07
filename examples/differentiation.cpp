@@ -1,4 +1,13 @@
+#include <cmath>
+
 #include "owl.h"
+#include "numerical_methods.h"
+
+
+double func(double x)
+{
+    return std::sin(x);
+}
 
 
 int main()
@@ -11,9 +20,10 @@ int main()
     OWL::ArrayXD y = OWL::sin(x);
     // y.display();
 
-    OWL::MatrixXD diff_matrix = OWL::diff_second_order(Nx);
-    OWL::MatrixXD diff_results = (1/std::pow(h,2)) * diff_matrix * y;
-    diff_results.display();
+    // first order centered finite difference
+    OWL::ArrayXD diff_array = first_order::diff_centered(func, x, h);
+
+    diff_array.display();
 
     return 0;
 }

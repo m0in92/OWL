@@ -22,6 +22,10 @@ Please refer to documentations in the docs folder for contained classes, methods
 	cmake ..
 	cmake --build .
 	```
+3. Test the installation of the build. From the build directory, run the following executable.
+	```
+	./GTest_run
+	```
 
 ### Usage
 #### Initialization
