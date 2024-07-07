@@ -21,17 +21,23 @@ namespace one_dimensional
         rhs_.push_back(bc2);
         OWL::ArrayXD rhs = (std::pow(h, 2)) * rhs_;
 
-        rhs.display();
-
         // Create the lhs matrix
-        OWL::MatrixXD lhs_matrix = OWL::diff_second_order(SIZE);
-        lhs_matrix[0][0] = 1;
-        lhs_matrix[0][1] = 0;
-        lhs_matrix[SIZE-1][SIZE-1] = 1;
-        lhs_matrix[SIZE-1][SIZE - 2] = 0;
+        // OWL::MatrixXD lhs_matrix = OWL::diff_second_order(SIZE);
+        // lhs_matrix[0][0] = 1;
+        // lhs_matrix[0][1] = 0;
+        // lhs_matrix[SIZE-1][SIZE-1] = 1;
+        // lhs_matrix[SIZE-1][SIZE - 2] = 0;
+        OWL::ArrayXD diag = -2 * OWL::Ones(SIZE);
+        diag[0] = 1;
+        diag[SIZE-1] = 1;
+        OWL::ArrayXD udiag = OWL::Ones(SIZE-1);
+        OWL::ArrayXD ldiag = udiag;
+        udiag[0] = 0;
+        ldiag[SIZE-2] = 0;
 
         // solve
-        OWL::ArrayXD result = solve_dgsev(lhs_matrix, rhs);
+        // OWL::ArrayXD result = solve_dgsev(lhs_matrix, rhs);
+        OWL::ArrayXD result = solve_dgtsv(ldiag, diag, udiag, rhs);
         return result;
     }
 
