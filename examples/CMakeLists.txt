@@ -21,3 +21,6 @@ target_link_libraries(first_order_finite_differences owl)
 
 add_executable(poisson_equation_1D poisson_equation_1D.cpp)
 target_link_libraries(poisson_equation_1D owl)
+
+add_executable(diff diff.cpp)
+target_link_libraries(diff owl)
