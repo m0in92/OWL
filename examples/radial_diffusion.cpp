@@ -19,11 +19,12 @@ int main()
 
     double j = I_app / (CONSTANT_F * S);
 
-    one_dimensional::RadialHeatEquation solver_instance = one_dimensional::RadialHeatEquation(100, c_init);
+    one_dimensional::RadialHeatEquation solver_instance = one_dimensional::RadialHeatEquation(10, c_init);
 
     double t_prev = 0.0;
-    for (int i=0; i<10; i++){
-        solver_instance.solver(j, dt, R, D);
+    for (int i=0; i<1000; i++){
+        solver_instance.solve(j, dt, R, D);
+        solver_instance.get_c_s().display();
     }
 
     solver_instance.get_c_s().display();

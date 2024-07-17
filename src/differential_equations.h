@@ -18,7 +18,7 @@ namespace one_dimensional
         OWL::ArrayXD get_c_s() { return c_s; }
 
         // helper methods
-        void solver(double i_j, double i_dt, double i_R, double i_D);
+        void solve(double i_j, double i_dt, double i_R, double i_D);
 
     private:
         double m_k; // number of spatial grid points
