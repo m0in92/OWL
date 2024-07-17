@@ -8,6 +8,10 @@ This repository provides the following functionality in the C++ programming lang
 - basic arithematic and algebraic operations on arrays and matrices
 - linear algebra operations such as matrix multiplications and the linear system of equations solution.
 - numerical methods for solving ordinary differential equations
+	* 1D Poisson Equation 
+- numerical methods for solving partial differential equations
+	* 1D heat equation in cartesan co-ordinates
+	* 1D heat equation in radial co-ordinates
 
 This source code is intended to be compiled as a static library that can be linked to any other code. Please find the CMakeLists.txt under examples folder for ideas to include the source code to your projects. 
 
