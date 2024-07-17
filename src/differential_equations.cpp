@@ -92,7 +92,10 @@ namespace one_dimensional
     }
 
     RadialHeatEquation::RadialHeatEquation(int spatial_grid_points, double c_init) : m_k(spatial_grid_points), m_c_init(c_init) 
-    {}
+    {
+        c_prev = c_init * OWL::Ones(m_k);
+        c_s = c_prev;
+    }
 
     OWL::ArrayXD RadialHeatEquation::get_LHS_diag(double i_dt, double i_R, double i_D)
     {
@@ -116,7 +119,7 @@ namespace one_dimensional
         {
             result_array[i] = -(A/2 - B/array_R[i+1]);
         }
-        result_array[m_k-1] = -A;
+        result_array[m_k-2] = -A;
 
         return result_array;
     }
@@ -135,5 +138,32 @@ namespace one_dimensional
         }
 
         return result_array;
+    }
+
+    OWL::ArrayXD RadialHeatEquation::get_RHS_array(double i_j, double i_dt, double i_R, double i_D)
+    {
+        double A = calc_A(i_dt, i_R, i_D);
+        double B = calc_B(i_dt, i_R, i_D);
+        OWL::ArrayXD array_R = calc_array_R(i_R);
+        
+        OWL::ArrayXD result_array = OWL::Zeros(m_k);
+        result_array[0] = (1-3*A)*c_prev[0] + 3*A*c_prev[1];
+        result_array[m_k-1] = (1-A)*c_prev[m_k-1] - (A+B/i_R)*(2*i_j/i_D) * calc_dr(i_R) + A*c_prev[m_k-2];
+        for (int i=1; i<(m_k-2); i++){
+            result_array[i] = (1-A)*c_prev[i] + (A/2+B/array_R[i])*c_prev[i+1] + (A/2-B/array_R[i])*c_prev[i-1];
+        }
+
+        return result_array;
+    }
+
+    void RadialHeatEquation::solver(double i_j, double i_dt, double i_R, double i_D)
+    {
+        OWL::ArrayXD ldiag = get_LHS_ldiag(i_dt, i_R, i_D);
+        OWL::ArrayXD diag = get_LHS_diag(i_dt, i_R, i_D);
+        OWL::ArrayXD udiag = get_LHS_udiag(i_dt, i_R, i_D);
+
+        OWL::ArrayXD RHS = get_RHS_array(i_j, i_dt, i_R, i_D);
+
+        c_s = solve_dgtsv(ldiag, diag, udiag, RHS);
     }
 }

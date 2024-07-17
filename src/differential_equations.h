@@ -14,9 +14,17 @@ namespace one_dimensional
     public:
         RadialHeatEquation(int spatial_grid_points, double c_init);
 
+        // getters
+        OWL::ArrayXD get_c_s() { return c_s; }
+
+        // helper methods
+        void solver(double i_j, double i_dt, double i_R, double i_D);
+
     private:
         double m_k; // number of spatial grid points
         double m_c_init;
+        OWL::ArrayXD c_prev;
+        OWL::ArrayXD c_s;
 
         // helper methods
         double calc_dr(double &i_R) { return i_R / m_k; }
@@ -28,7 +36,5 @@ namespace one_dimensional
         OWL::ArrayXD get_LHS_ldiag(double i_dt, double i_R, double i_D);
         OWL::ArrayXD get_LHS_udiag(double i_dt, double i_R, double i_D);
         OWL::ArrayXD get_RHS_array(double i_j, double i_dt, double i_R, double i_D);
-
-        OWL::ArrayXD solver(double i_j, double i_dt, double i_R, double i_D);
-    }
+    };
 }

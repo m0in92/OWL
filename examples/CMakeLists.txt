@@ -24,3 +24,6 @@ target_link_libraries(poisson_equation_1D owl)
 
 add_executable(diff diff.cpp)
 target_link_libraries(diff owl)
+
+add_executable(radial_diffusion radial_diffusion.cpp)
+target_link_libraries(radial_diffusion owl)
