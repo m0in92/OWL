@@ -76,15 +76,10 @@ OWL::ArrayXD solve_dgtsv(OWL::ArrayXD dl, OWL::ArrayXD d, OWL::ArrayXD ud, OWL::
         result_vec.push_back(ptr_b[i]);
     }
 
-    if (info == 0)
+    if (info != 0)
     {
-        std::cout << "Simulation run successfully." << std::endl;
+        std::cout << "Linear solve didnot run successfully." << std::endl;
     }
-
-    // delete ptr_diag;
-    // delete ptr_udiag;
-    // delete ptr_ldiag;
-    // delete ptr_b;
 
     return OWL::ArrayXD(result_vec);
 }

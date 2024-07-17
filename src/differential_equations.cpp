@@ -114,7 +114,6 @@ namespace one_dimensional
         OWL::ArrayXD result_array = OWL::Ones(m_k-1);
 
         OWL::ArrayXD array_R = calc_array_R(i_R);
-
         for (int i=0; i<(m_k-2); i++)
         {
             result_array[i] = -(A/2 - B/array_R[i+1]);
@@ -164,7 +163,6 @@ namespace one_dimensional
 
         OWL::ArrayXD RHS = get_RHS_array(i_j, i_dt, i_R, i_D);
 
-        c_s = solve_dgtsv(ldiag, diag, udiag, RHS);
-        c_prev = c_s;
+        c_prev = solve_dgtsv(ldiag, diag, udiag, RHS);
     }
 }

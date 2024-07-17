@@ -1,31 +1,32 @@
 #include <cmath>
+#include <thread>
 
 #include "owl.h"
 #include "differential_equations.h"
 
-#define CONSTANT_F 96487
 
 int main() 
 {
-    double R = 8.5e-6;
-    double c_max = 51410;
-    double D = 1e-14;
-    double S = 1.1167;
-    double soc_init = 0.4956;
-    double c_init = soc_init * c_max;
+    double R = 1;
+    double D = 1e-3;
+    double c_init = 1.0;
 
-    double I_app = -1.65;
-    double dt = 0.1;
+    int N_SIM = 1000;
+    double dt = 1;
+    double j = -0.01;
 
-    double j = I_app / (CONSTANT_F * S);
+    one_dimensional::RadialHeatEquation solver_instance = one_dimensional::RadialHeatEquation(1000, c_init);
 
-    one_dimensional::RadialHeatEquation solver_instance = one_dimensional::RadialHeatEquation(10, c_init);
-
-    double t_prev = 0.0;
-    for (int i=0; i<1000; i++){
+    auto t1 = std::chrono::high_resolution_clock::now();
+    for (int i=0; i<N_SIM; i++){
         solver_instance.solve(j, dt, R, D);
-        solver_instance.get_c_s().display();
     }
+    auto t2 = std::chrono::high_resolution_clock::now();
 
-    solver_instance.get_c_s().display();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1);
+
+    std::cout << "Simulation time (C++): " << duration.count() << " ms" << std::endl;
+
+    solver_instance.get_c_prev().display();
+
 }

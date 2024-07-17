@@ -1,3 +1,5 @@
+import time
+
 import matplotlib.pyplot as plt
 
 try:
@@ -19,12 +21,19 @@ dt: float = 1
 j: float = -0.01
 R: float = 1
 
-solver_instance: RadialHeatEquation = RadialHeatEquation(c_init=c_init, spatial_grid_pts=10)
+solver_instance: RadialHeatEquation = RadialHeatEquation(c_init=c_init, spatial_grid_pts=100)
 
-N_ITER: int = 100
+N_ITER: int = 1000
 
+start_time: float = time.time()
 for i in range(N_ITER):
     solver_instance.solve(dt=dt, j=j, R=R, D=D)
+end_time: float = time.time()
+
+print("Simulation Time (Python): ", end_time-start_time, " s")
+
+# print results
+print(solver_instance.c_prev)
 
 # plots
 plt.plot(solver_instance.c_init)
