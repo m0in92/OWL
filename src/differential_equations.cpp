@@ -50,37 +50,38 @@ namespace one_dimensional
     }
 
     OWL::MatrixXD heat_equation(OWL::ArrayXD geometry, double (*func)(double), double alpha, double dt, double total_sim_time,
-                               double bc1, double bc2)
+                                double bc1, double bc2)
     {
         int SIZE = geometry.getArray().size();
         double dx = geometry[1] - geometry[0];
 
-        OWL::MatrixXD c_init = OWL::MatrixXD(SIZE,1);
+        OWL::MatrixXD c_init = OWL::MatrixXD(SIZE, 1);
         for (int i : geometry.getArray())
         {
             c_init[i][0] = func(geometry[i]);
         }
 
-        OWL::ArrayXD diag = (1 - 2*alpha*dt/std::pow(dx,2)) * OWL::Ones(SIZE);
+        OWL::ArrayXD diag = (1 - 2 * alpha * dt / std::pow(dx, 2)) * OWL::Ones(SIZE);
         diag[0] = 1;
         diag[SIZE - 1] = 1;
-        OWL::ArrayXD udiag = alpha*dt/std::pow(dx, 2) * OWL::Ones(SIZE - 1);
+        OWL::ArrayXD udiag = alpha * dt / std::pow(dx, 2) * OWL::Ones(SIZE - 1);
         OWL::ArrayXD ldiag = udiag;
         udiag[0] = 0;
         ldiag[SIZE - 2] = 0;
 
         OWL::MatrixXD mat = OWL::MatrixXD(SIZE, SIZE);
         mat[0][0] = 1;
-        for (int i=1; i<(SIZE-1); i++){
-            mat[i][i] = 1 - 2*alpha*dt/std::pow(dx,2);
-            mat[i][i-1] = alpha*dt/std::pow(dx, 2);
-            mat[i][i+1] = alpha*dt/std::pow(dx, 2);
+        for (int i = 1; i < (SIZE - 1); i++)
+        {
+            mat[i][i] = 1 - 2 * alpha * dt / std::pow(dx, 2);
+            mat[i][i - 1] = alpha * dt / std::pow(dx, 2);
+            mat[i][i + 1] = alpha * dt / std::pow(dx, 2);
         }
-        mat[SIZE-1][SIZE-1] = 0;
-        
+        mat[SIZE - 1][SIZE - 1] = 0;
+
         OWL::MatrixXD c_prev = c_init;
         OWL::MatrixXD result = OWL::MatrixXD(SIZE, 1);
-        for(int i = 0; i < (int)(total_sim_time/dx); i++)
+        for (int i = 0; i < (int)(total_sim_time / dx); i++)
         {
             result = mat * c_prev;
             c_prev = result;
@@ -88,5 +89,51 @@ namespace one_dimensional
         }
 
         return result;
+    }
+
+    RadialHeatEquation::RadialHeatEquation(int spatial_grid_points, double c_init) : m_k(spatial_grid_points), m_c_init(c_init) 
+    {}
+
+    OWL::ArrayXD RadialHeatEquation::get_LHS_diag(double i_dt, double i_R, double i_D)
+    {
+        double A = calc_A(i_dt, i_R, i_D);
+        OWL::ArrayXD result_array = (1+A) * OWL::Ones(m_k);
+        result_array[0] = 1 + 3 * A;
+        result_array[m_k-1] = 1 + A;
+
+        return result_array;
+    }
+
+    OWL::ArrayXD RadialHeatEquation::get_LHS_ldiag(double i_dt, double i_R, double i_D)
+    {
+        double A = calc_A(i_dt, i_R, i_D);
+        double B = calc_B(i_dt, i_R, i_D);
+        OWL::ArrayXD result_array = OWL::Ones(m_k-1);
+
+        OWL::ArrayXD array_R = calc_array_R(i_R);
+
+        for (int i=0; i<(m_k-2); i++)
+        {
+            result_array[i] = -(A/2 - B/array_R[i+1]);
+        }
+        result_array[m_k-1] = -A;
+
+        return result_array;
+    }
+
+    OWL::ArrayXD RadialHeatEquation::get_LHS_udiag(double i_dt, double i_R, double i_D)
+    {
+        double A = calc_A(i_dt, i_R, i_D);
+        double B = calc_B(i_dt, i_R, i_D);
+        OWL::ArrayXD array_R = calc_array_R(i_R);
+
+        OWL::ArrayXD result_array = OWL::Zeros(m_k-1);
+        result_array[0] = -3*A;
+        for (int i=1; i<(m_k-2); i++)
+        {
+            result_array[i] = -(A/2 + B/array_R[i]);
+        }
+
+        return result_array;
     }
 }
