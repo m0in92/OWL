@@ -11,7 +11,7 @@ int main()
     double D = 1e-3;
     double c_init = 1.0;
 
-    int N_SIM = 1000;
+    int N_SIM = 4000;
     double dt = 1;
     double j = -0.01;
 
